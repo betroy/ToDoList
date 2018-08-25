@@ -1,0 +1,5 @@
+<!--todo.wxml-->
+<view>
+    <text>{{msg}}</text>
+    <button bindtap="viewTap">click me</button>
+</view>

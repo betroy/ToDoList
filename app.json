@@ -1,0 +1,27 @@
+{
+  "pages": ["pages/todo/todo", "pages/tomato/tomato"],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "番茄土豆",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh":true
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/todo/todo",
+        "text": "土豆"
+      },
+      {
+        "pagePath": "pages/tomato/tomato",
+        "text": "番茄"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 1000,
+    "downloadFile": 1000
+  },
+  "debug": true
+}
