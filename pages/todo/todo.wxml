@@ -1,5 +1,6 @@
-<!--todo.wxml-->
+<!-- todo.wxml -->
 <view>
     <text>{{msg}}</text>
+    <view wx:for="{{array}}">{{item}}</view>
     <button bindtap="viewTap">click me</button>
 </view>

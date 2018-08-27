@@ -1,21 +1,31 @@
 {
-  "pages": ["pages/todo/todo", "pages/tomato/tomato"],
+  "pages": ["pages/todo/todo", "pages/tomato/tomato","pages/my/my"],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "番茄土豆",
     "navigationBarTextStyle": "black",
-    "enablePullDownRefresh":true
+    "enablePullDownRefresh": true
   },
   "tabBar": {
     "list": [
       {
         "pagePath": "pages/todo/todo",
-        "text": "土豆"
+        "text": "土豆",
+        "iconPath":"images/ic_action_list_normal.png",
+        "selectedIconPath":"images/ic_action_list_selected.png"
       },
       {
         "pagePath": "pages/tomato/tomato",
-        "text": "番茄"
+        "text": "番茄",
+        "iconPath":"images/ic_action_tomato_normal.png",
+        "selectedIconPath":"images/ic_action_tomato_selected.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath":"images/ic_action_user_normal.png",
+        "selectedIconPath":"images/ic_action_user_selected.png"
       }
     ]
   },
