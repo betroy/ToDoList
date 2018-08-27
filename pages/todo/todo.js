@@ -1,7 +1,17 @@
 Page({
   data: {
+    condition: true,
     msg: "msg",
-    array: [1, 2, 3, 4, 5]
+    array: [{ message: "foo" }, { message: "bar" }],
+    objectArray: [
+      { id: 1, unique: "unique_1" },
+      { id: 2, unique: "unique_2" },
+      { id: 3, unique: "unique_3" }
+    ],
+    item: {
+      index: 0,
+      msg: "this is a template"
+    }
   },
   onLoad() {},
   onReady() {},
@@ -17,5 +27,8 @@ Page({
     this.setData({
       msg: "newMsg"
     });
+  },
+  switch() {
+    this.setData({ objectArray: [{ id: 1, unique: "unique_1" }] });
   }
 });

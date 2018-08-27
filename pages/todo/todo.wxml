@@ -1,6 +1,16 @@
 <!-- todo.wxml -->
 <view>
     <text>{{msg}}</text>
-    <view wx:for="{{array}}">{{item}}</view>
-    <button bindtap="viewTap">click me</button>
+    <!-- <view wx:for="{{array}}" wx:for-index="position" wx:for-item="itemName">
+        {{position}}:{{itemName.message}}
+    </view> -->
+    <switch wx:for="{{objectArray}}" wx:key="unique"></switch>
+    <button bindtap="switch">Switch</button>
+    <view wx:if="{{condition}}">condition</view>
+    <template is="msgItem" data="{{...item}}" />
+    <template name="msgItem">
+        <view>
+            <text>{{index}}:{{msg}}</text>
+        </view>
+    </template>
 </view>
