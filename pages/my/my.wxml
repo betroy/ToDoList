@@ -1,0 +1,6 @@
+<!-- my.wxml -->
+<view>
+    <open-data type="userAvatarUrl"></open-data>
+    <open-data type="userNickName"></open-data>
+    <button open-type="getUserInfo" bindgetuserinfo="userInfoHandler">用户授权</button>
+</view>

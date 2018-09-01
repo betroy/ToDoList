@@ -1,16 +1,31 @@
 <!-- todo.wxml -->
 <view>
-    <text>{{msg}}</text>
+    <!-- <text>{{msg}}</text> -->
     <!-- <view wx:for="{{array}}" wx:for-index="position" wx:for-item="itemName">
         {{position}}:{{itemName.message}}
     </view> -->
-    <switch wx:for="{{objectArray}}" wx:key="unique"></switch>
-    <button bindtap="switch">Switch</button>
-    <view wx:if="{{condition}}">condition</view>
-    <template is="msgItem" data="{{...item}}" />
+    <!-- <switch wx:for="{{objectArray}}" wx:key="unique"></switch> -->
+    <!-- <button bindtap="switch">Switch</button> -->
+    <!-- <view wx:if="{{condition}}">condition</view> -->
+    <!-- <template is="msgItem" data="{{...item}}" />
     <template name="msgItem">
         <view>
             <text>{{index}}:{{msg}}</text>
         </view>
-    </template>
+    </template> -->
+    <view id="outer" bindtap="bindtap1">
+        outer view
+        <view id="middle" catchtap="bindtap2">
+            middle view
+            <view id="inner" bindtap="bindtap3">inner view</view>
+        </view>
+    </view>
 </view>
+<!-- <import src="todo.wxml"></import> -->
+<wxs module="module">
+var msg="hi";
+module.exports.message=msg;
+</wxs>
+<view>{{module.message}}</view>
+<!-- <wxs src="./todo.wxs" module="tools"></wxs> -->
+<view>{{tools.foo}}</view>

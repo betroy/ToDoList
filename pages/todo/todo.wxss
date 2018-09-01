@@ -1,0 +1,4 @@
+/* @import "todo.wxss" */
+.small-p {
+  padding: 5px;
+}

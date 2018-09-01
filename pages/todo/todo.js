@@ -13,7 +13,12 @@ Page({
       msg: "this is a template"
     }
   },
-  onLoad() {},
+  onLoad() {
+    // let todoTableObject = new wx.BaaS.TableObject(49981);
+    // let myRecord = todoTableObject.create();
+    // myRecord.set("task_title", "task_title");
+    // myRecord.save();
+  },
   onReady() {},
   onShow() {},
   onHide() {},
@@ -30,5 +35,14 @@ Page({
   },
   switch() {
     this.setData({ objectArray: [{ id: 1, unique: "unique_1" }] });
+  },
+  bindtap1(event) {
+    console.log("bindtap1");
+  },
+  bindtap2(event) {
+    console.log("bindtap2");
+  },
+  bindtap3(event) {
+    console.log("bindtap3");
   }
 });

@@ -1,0 +1,9 @@
+// var tools=require("./todo.wxs");
+var foo = "hello world";
+
+var bar = function() {};
+
+module.exports = {
+  foo: foo,
+  bar: bar
+};

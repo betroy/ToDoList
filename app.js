@@ -1,17 +1,32 @@
 //app.js
 App({
   onLaunch(options) {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync("logs") || [];
-    logs.unshift(Date.now());
-    wx.setStorageSync("logs", logs);
+    wx.BaaS = requirePlugin("sdkPlugin");
+    //让插件帮助完成登录、支付等功能
+    wx.BaaS.wxExtend(wx.login, wx.getUserInfo, wx.requestPayment);
+    //初始化知晓云
+    let clientID = "e2d25da77dc83e55a453";
+    wx.BaaS.init(clientID);
 
+    // wx.BaaS.login(true).then(
+    //   res => {
+    //     console.log("success");
+    //     let MyUser = new wx.BaaS.User();
+    //     console.log(MyUser);
+    //   },
+    //   res => {
+    //     console.log("fail");
+    //   }
+    // );
+    
     // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    });
+    // wx.login({
+    //   success: res => {
+    //     // 发送 res.code 到后台换取 openId, sessionKey, unionId
+    //     console.log(res);
+    //   }
+    // });
+
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -19,6 +34,7 @@ App({
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
+              console.log(res.userInfo);
               // 可以将 res 发送给后台解码出 unionId
               this.globalData.userInfo = res.userInfo;
 
@@ -32,8 +48,6 @@ App({
         }
       }
     });
-
-    console.log("path===>" + options.path);
   },
   onShow(options) {
     console.log("onShow");
