@@ -1,6 +1,18 @@
 <!-- my.wxml -->
-<view>
-    <open-data type="userAvatarUrl"></open-data>
-    <open-data type="userNickName"></open-data>
-    <button open-type="getUserInfo" bindgetuserinfo="userInfoHandler">用户授权</button>
+<view class="page">
+    <view class="userinfo">
+        <!-- 头像 -->
+        <open-data type="userAvatarUrl" class="userinfo-avatar"></open-data>
+        <!-- 昵称 -->
+        <open-data type="userNickName" class="userinfo-nickname"></open-data>
+    </view>
+    <!-- 我的页面 item -->
+    <view class="weui-cells weui-cells_after-title userinfo-item">
+        <block wx:for="{{itemList}}" wx:for-item="item" wx:for-index="index" wx:key="*this">
+            <navigator url="{{item.page}}" hover-class="navigator-hover" class="weui-cell weui-cell_access">
+                <view class="weui-cell__bd">{{item.name}}</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </navigator>
+        </block>
+    </view>
 </view>

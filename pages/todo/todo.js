@@ -1,5 +1,7 @@
+const App = getApp();
 Page({
   data: {
+    windowHeight: App.systemInfo.windowHeight,
     condition: true,
     msg: "msg",
     array: [{ message: "foo" }, { message: "bar" }],
@@ -8,10 +10,24 @@ Page({
       { id: 2, unique: "unique_2" },
       { id: 3, unique: "unique_3" }
     ],
-    item: {
-      index: 0,
-      msg: "this is a template"
-    }
+    items: [
+      { value: "USA", name: "美国" },
+      { value: "CHN", name: "中国", checked: "true" },
+      { value: "BRA", name: "巴西" },
+      { value: "JPN", name: "日本" },
+      { value: "JPN", name: "日本" },
+      { value: "JPN", name: "日本" },
+      { value: "JPN", name: "日本" },
+      { value: "JPN", name: "日本" },
+      { value: "ENG", name: "英国" },
+      { value: "ENG", name: "英国" },
+      { value: "ENG", name: "英国" },
+      { value: "ENG", name: "英国" },
+      { value: "ENG", name: "英国" },
+      { value: "ENG", name: "英国" },
+      { value: "ENG", name: "英国" },
+      { value: "FRA", name: "法国" }
+    ]
   },
   onLoad() {
     // let todoTableObject = new wx.BaaS.TableObject(49981);
@@ -23,26 +39,35 @@ Page({
   onShow() {},
   onHide() {},
   onUnload() {},
-  onPullDownRefresh() {},
+  onPullDownRefresh() {
+    console.log("onPullDownRefresh");
+    wx.stopPullDownRefresh();
+  },
   onReachBottom() {},
   onShareAppMessage() {},
   onPageScroll() {},
   onTabItemTap(item) {},
-  viewTap() {
+  bindconfirm(event) {
+    var value = event.detail.value;
+    console.log(event.detail.value);
     this.setData({
-      msg: "newMsg"
+      //清空input value
+      inputValue: ""
     });
   },
-  switch() {
-    this.setData({ objectArray: [{ id: 1, unique: "unique_1" }] });
+  scrolltolower(event) {
+    console.log("scrolltolower");
+    console.log(event);
   },
-  bindtap1(event) {
-    console.log("bindtap1");
+  //item点击事件 跳转至任务详情
+  itemBindTap(event) {
+    console.log(event);
+    wx.navigateTo({ url: "../tododetail/tododetail" });
   },
-  bindtap2(event) {
-    console.log("bindtap2");
+  checkboxChange(event) {
+    console.log(event);
   },
-  bindtap3(event) {
-    console.log("bindtap3");
+  catchtap(event) {
+    // console.log(event);
   }
 });

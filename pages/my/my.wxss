@@ -1,0 +1,65 @@
+/**my.wxss**/
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #ffffff;
+  height: 350rpx;
+}
+.userinfo-avatar {
+  width: 160rpx;
+  height: 160rpx;
+  overflow: hidden;
+  display: block;
+  margin-top: 50rpx;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+.userinfo-nickname {
+  margin-top: 10rpx;
+  margin-bottom: 30rpx;
+}
+.userinfo-item {
+  margin: 30rpx 0 0 0;
+}
+.navigator {
+  padding: 20rpx 30rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+}
+.navigator:before {
+  content: " ";
+  position: absolute;
+  left: 30rpx;
+  top: 0;
+  right: 30rpx;
+  height: 1px;
+  border-top: 1rpx solid #d8d8d8;
+  color: #d8d8d8;
+}
+.navigator:first-child::before {
+  display: none;
+}
+.item-text {
+  flex: 1;
+}
+.item-arrow {
+  padding-right: 26rpx;
+  position: relative;
+}
+.item-arrow:after {
+  content: " ";
+  display: inline-block;
+  height: 18rpx;
+  width: 18rpx;
+  border-width: 2rpx 2rpx 0 0;
+  border-color: #888888;
+  border-style: solid;
+  transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+  position: absolute;
+  top: 50%;
+  margin-top: -8rpx;
+  right: 28rpx;
+}

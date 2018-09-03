@@ -5,14 +5,14 @@
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"nodeModules": true
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.2.4",
 	"appid": "wx9954624f6285e8ee",
 	"projectname": "ToDoList",
 	"isGameTourist": false,
-	"cloudfunctionRoot": "./cloudfunctions/",
 	"condition": {
 		"search": {
 			"current": -1,

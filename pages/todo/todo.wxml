@@ -1,31 +1,23 @@
 <!-- todo.wxml -->
-<view>
-    <!-- <text>{{msg}}</text> -->
-    <!-- <view wx:for="{{array}}" wx:for-index="position" wx:for-item="itemName">
-        {{position}}:{{itemName.message}}
-    </view> -->
-    <!-- <switch wx:for="{{objectArray}}" wx:key="unique"></switch> -->
-    <!-- <button bindtap="switch">Switch</button> -->
-    <!-- <view wx:if="{{condition}}">condition</view> -->
-    <!-- <template is="msgItem" data="{{...item}}" />
-    <template name="msgItem">
-        <view>
-            <text>{{index}}:{{msg}}</text>
-        </view>
-    </template> -->
-    <view id="outer" bindtap="bindtap1">
-        outer view
-        <view id="middle" catchtap="bindtap2">
-            middle view
-            <view id="inner" bindtap="bindtap3">inner view</view>
+<view class="page">
+    <!-- 添加任务 input -->
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+            <input class="weui-input" placeholder="添加新任务" bindconfirm="bindconfirm" value="{{inputValue}}" />
         </view>
     </view>
+    <!-- 任务列表 -->
+    <!-- scroll-view必须指定height才能触发bindscrolltolower事件 -->
+    <scroll-view scroll-y="true" bindscrolltolower="scrolltolower" style="height:{{windowHeight-44-10}}px;margin:10rpx 0">
+        <view class="weui-cells weui-cells_after-title">
+            <checkbox-group bindchange="checkboxChange">
+                <view class="weui-cell weui-check__label" wx:for="{{items}}" wx:key="{{item.value}}" catchtap="itemBindTap">
+                    <view class="weui-cell__hd" catchtap="catchtap">
+                        <checkbox value="{{item.value}}" checked="{{item.checked}}" />
+                    </view>
+                    <view class="weui-cell__bd">{{item.name}}</view>
+                </view>
+            </checkbox-group>
+        </view>
+    </scroll-view>
 </view>
-<!-- <import src="todo.wxml"></import> -->
-<wxs module="module">
-var msg="hi";
-module.exports.message=msg;
-</wxs>
-<view>{{module.message}}</view>
-<!-- <wxs src="./todo.wxs" module="tools"></wxs> -->
-<view>{{tools.foo}}</view>

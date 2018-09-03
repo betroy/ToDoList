@@ -1,9 +1,12 @@
 {
   "pages": [
     "pages/todo/todo",
+    "pages/tododetail/tododetail",
     "pages/tomato/tomato",
     "pages/chart/chart",
-    "pages/my/my"
+    "pages/my/my",
+    "pages/feedback/feedback",
+    "pages/about/about"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -13,6 +16,8 @@
     "enablePullDownRefresh": true
   },
   "tabBar": {
+    "color": "#cccccc",
+    "selectedColor": "#e74c3c",
     "list": [
       {
         "pagePath": "pages/todo/todo",
