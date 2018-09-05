@@ -1,0 +1,16 @@
+<view>
+    <canvas style="width: 375px; height: 375px;position: relative;" canvas-id="tomatoCanvas"></canvas>
+    <view class="button-sp-area">
+        <button wx:if="{{!tomatoTimeOver}}" class="weui-btn" type="primary" plain="true" bind:tap="bindTapTomato">
+            {{isStartTomato?"放弃番茄":"开始专注"}}
+        </button>
+        <view wx:if="{{tomatoTimeOver}}">
+            <button class="weui-btn" type="primary" plain="true" bind:tap="bindTapRest">
+                {{isStartRest?"休息结束":"开始休息"}}
+            </button>
+            <button class="weui-btn" type="default" plain="true" bind:tap="bindTapRestExit">
+                退出
+            </button>
+        </view>
+    </view>
+</view>

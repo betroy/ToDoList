@@ -1,1 +1,23 @@
-<view >todoDetail</view>
+<view >
+    <!-- todo title -->
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-check__label">
+            <view id="{{currentTodo._id}}" class="weui-cell__hd" catch:tap="catchtapRadio">
+                <radio checked="{{currentTodo.checked}}" />
+            </view>
+            <input class="weui-cell__bd" value="{{currentTodo.todo_title}}" bindconfirm="bindconfirmInput" />
+        </view>
+    </view>
+    <!-- 备注 -->
+    <view class="weui-cells__title">备注</view>
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+            <view class="weui-cell__bd">
+                <textarea class="weui-textarea" placeholder="请输入备注" style="height: 3.3em" value="{{currentTodo.remark}} " bindconfirm="bindconfirmTextarea" />
+            </view>
+        </view>
+    </view>
+    <view class="btn_spacing">
+        <button class="weui-btn" type="warn" bindtap="bindtapDelete">删除</button>
+    </view>
+</view>

@@ -15,7 +15,6 @@ App({
     try {
       let localId = wx.getStorageSync("id");
       self.globalData.id = localId;
-      console.log("id===>" + localId);
     } catch (e) {
       console.log(e);
     }

@@ -10,29 +10,7 @@
   overflow-x: hidden;
 }
 
-.l {
-  background-color: white;
-  height: 65rpx;
-  width: 750rpx;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-.r {
-  height: 65rpx;
-  display: flex;
-  direction: row;
-  text-align: center;
-  vertical-align: middle;
-  line-height: 65rpx;
-}
-.edit {
-  background-color: #ccc;
-  color: #fff;
-  width: 150rpx;
-}
-.delete {
-  background-color: red;
-  color: #fff;
-  width: 150rpx;
+.done {
+  text-decoration: line-through;
+  color: #ccc;
 }

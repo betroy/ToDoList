@@ -3,23 +3,13 @@ Page({
   data: {
     windowHeight: App.systemInfo.windowHeight,
     todos: [],
-    checkedTodos: []
+    offset: 0,
+    needRefresh: false
   },
 
   setTodos(todos) {
-    let checkedTodos = todos
-      .filter(todo => {
-        return todo.checked;
-      })
-      .map(todo => {
-        if (todo.checked) {
-          return todo._id;
-        }
-      });
-
     this.setData({
-      todos,
-      checkedTodos
+      todos
     });
   },
 
@@ -28,7 +18,7 @@ Page({
     wx.stopPullDownRefresh();
   },
 
-  queryTodos() {
+  queryTodos(loadmore) {
     //实例化TableObject对象
     let todoTableObject = new wx.BaaS.TableObject("todo");
     //实例化Query对象
@@ -37,7 +27,7 @@ Page({
     todoTableObject
       .setQuery(query)
       .limit(15)
-      .offset(this.data.todos.length)
+      .offset(this.data.offset)
       .find()
       .then(
         res => {
@@ -46,7 +36,11 @@ Page({
           let todos = res.data.objects;
           let currentTodos = this.data.todos;
           if (todos && todos.length > 0) {
-            this.setTodos([...currentTodos, ...todos]);
+            if (loadmore) {
+              this.setTodos([...currentTodos, ...todos]);
+            } else {
+              this.setTodos(todos);
+            }
           }
           this.loadDone();
         },
@@ -78,45 +72,39 @@ Page({
     );
   },
 
-  deleteTodo() {},
-
-  updateTodo(currentCheckedTodos) {
-    //查找当前已选中的todo
-    // let checkedTodos = this.data.todos.filter(todo => todo.checked);
-    let checkedTodos = this.data.checkedTodos;
-    //对比，找出已修改状态的todo
-    //差集
-    var differenceTodo = checkedTodos
-      .filter(todo => {
-        return currentCheckedTodos.indexOf(todo) == -1;
-      })
-      .concat(
-        currentCheckedTodos.filter(todo => {
-          return checkedTodos.indexOf(todo) == -1;
-        })
-      );
-    console.log(checkedTodos);
-    console.log(currentCheckedTodos);
-    console.log(differenceTodo);
-    this.setData({
-      checkedTodos: currentCheckedTodos
-    });
-    let checkedTodoId = differenceTodo[0];
-
+  // 根据ID查找todo
+  findTodo(todoId) {
     let todos = this.data.todos;
-    let currentCheckedTodo = null;
+    let findedTodo = null;
 
     for (var i in todos) {
-      if (todos[i]._id === checkedTodoId) {
-        currentCheckedTodo = todos[i];
+      let todo = todos[i];
+      if (todo._id === todoId) {
+        findedTodo = todo;
         break;
       }
     }
-    console.log(currentCheckedTodo);
+
+    return findedTodo;
+  },
+
+  deleteTodo() {},
+
+  updateTodo(checkedTodoId) {
+    let todos = this.data.todos;
+    let checkedTodo = this.findTodo(checkedTodoId);
+
+    if (!checkedTodo) return;
+
+    checkedTodo.checked = !checkedTodo.checked;
+    this.setTodos(todos);
+    console.log(todos);
+
+    //对比，找出已修改状态的todo
     //实例化TableObject对象
     let todoTableObject = new wx.BaaS.TableObject("todo");
-    let todoRecord = todoTableObject.getWithoutData(currentCheckedTodo._id);
-    todoRecord.set("checked", !currentCheckedTodo.checked);
+    let todoRecord = todoTableObject.getWithoutData(checkedTodo._id);
+    todoRecord.set("checked", checkedTodo.checked);
     todoRecord.update().then(
       res => {
         console.log("update todo success");
@@ -133,14 +121,25 @@ Page({
     });
   },
   onReady() {
-    this.queryTodos();
+    this.queryTodos(false);
   },
-  onShow() {},
-  onHide() {},
+  onShow() {
+    if (this.data.needRefresh) {
+      this.queryTodos(false);
+    }
+  },
+  onHide() {
+    this.setData({
+      needRefresh: true
+    });
+  },
   onUnload() {},
   onPullDownRefresh() {
     console.log("onPullDownRefresh");
-    this.queryTodos();
+    this.setData({
+      offset: 0
+    });
+    this.queryTodos(false);
   },
   onReachBottom() {},
   onShareAppMessage() {},
@@ -161,19 +160,25 @@ Page({
     //加载更多
     console.log("scrolltolower");
     console.log(event);
-    this.queryTodos();
+    this.setData({
+      offset: this.data.todos.length
+    });
+    this.queryTodos(true);
   },
   //item点击事件 跳转至任务详情
   itemBindTap(event) {
     console.log(event);
-    wx.navigateTo({ url: "../tododetail/tododetail" });
+    let checkedTodoId = event.currentTarget.id;
+    let todo = this.findTodo(checkedTodoId);
+    let todoJson = JSON.stringify(todo);
+    wx.navigateTo({ url: `../tododetail/tododetail?todo=${todoJson}` });
   },
   checkboxChange(event) {
     // console.log(event);
-    // let currentCheckedTodos = event.detail.value;
-    // this.updateTodo(currentCheckedTodos);
   },
   catchtap(event) {
     console.log(event);
+    let checkedTodoId = event.currentTarget.id;
+    this.updateTodo(checkedTodoId);
   }
 });

@@ -1,5 +1,5 @@
 <!-- my.wxml -->
-<view class="page">
+<view>
     <view class="userinfo">
         <!-- 头像 -->
         <open-data type="userAvatarUrl" class="userinfo-avatar"></open-data>

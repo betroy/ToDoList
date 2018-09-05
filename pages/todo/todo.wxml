@@ -1,5 +1,5 @@
 <!-- todo.wxml -->
-<view class="page">
+<view>
     <!-- 添加任务 input -->
     <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input">
@@ -11,11 +11,13 @@
     <scroll-view wx:if="{{todos.length>0}}" scroll-y="true" bindscrolltolower="scrolltolower" style="height:{{windowHeight-44-10}}px;margin:10rpx 0">
         <view class="weui-cells weui-cells_after-title">
             <checkbox-group bindchange="checkboxChange">
-                <view class="weui-cell weui-check__label" wx:for="{{todos}}" wx:for-index="index" wx:for-item="todo" wx:key="_id" catchtap="itemBindTap">
-                    <view class="weui-cell__hd" catchtap="catchtap">
-                        <checkbox value="{{todo._id}}" checked="{{todo.checked}}" />
+                <view id="{{todo._id}}" class="weui-cell weui-check__label" wx:for="{{todos}}" wx:for-index="index" wx:for-item="todo" wx:key="_id" catchtap="itemBindTap">
+                    <view id="{{todo._id}}" class="weui-cell__hd" catch:tap="catchtap">
+                        <checkbox checked="{{todo.checked}}" />
                     </view>
-                    <view class="weui-cell__bd">{{todo.todo_title}}</view>
+                    <view class="weui-cell__bd {{todo.checked?'done':''}}">
+                        {{todo.todo_title}}
+                    </view>
                 </view>
             </checkbox-group>
         </view>

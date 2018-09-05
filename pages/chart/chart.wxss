@@ -1,0 +1,12 @@
+.chart_view {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.chart_text {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
