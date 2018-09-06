@@ -1,0 +1,21 @@
+<view>
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+            <view class="weui-cell__bd">
+                <textarea class="weui-textarea" placeholder="写下您的反馈吧" style="height: 3.3em" bindinput="bindContentKeyInput" />
+            </view>
+        </view>
+    </view>
+    <view class="weui-cells weui-cells_after-title" style="margin-top:20px">
+        <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__bd">
+                <input class="weui-input" placeholder="请输入您的邮箱" bindinput="bindEmailKeyInput" />
+            </view>
+        </view>
+    </view>
+    <view class="btn_spacing">
+        <button class="weui-btn" type="primary" bindtap="bindtapSubmit" disabled="{{!(content&&content.length>0)}}">
+            提交
+        </button>
+    </view>
+</view>

@@ -19,6 +19,11 @@ Page({
   },
 
   queryTodos(loadmore) {
+    if (!loadmore) {
+      this.setData({
+        offset: 0
+      });
+    }
     //实例化TableObject对象
     let todoTableObject = new wx.BaaS.TableObject("todo");
     //实例化Query对象
@@ -124,7 +129,7 @@ Page({
     this.queryTodos(false);
   },
   onShow() {
-    if (this.data.needRefresh) {
+    if (App.globalData.needRefresh) {
       this.queryTodos(false);
     }
   },

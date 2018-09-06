@@ -8,7 +8,7 @@
             <button class="weui-btn" type="primary" plain="true" bind:tap="bindTapRest">
                 {{isStartRest?"休息结束":"开始休息"}}
             </button>
-            <button class="weui-btn" type="default" plain="true" bind:tap="bindTapRestExit">
+            <button wx:if="{{!isStartRest}}" class="weui-btn" type="default" plain="true" bind:tap="bindTapRestExit">
                 退出
             </button>
         </view>

@@ -1,3 +1,4 @@
+const App = getApp();
 Page({
   data: {
     currentTodo: null,
@@ -16,10 +17,13 @@ Page({
     todoRecord.set(key, value);
     todoRecord.update().then(
       res => {
+        App.globalData.needRefresh = true;
         console.log("update todo success");
+        console.log(res);
       },
       err => {
         console.log("update todo err");
+        console.log(err);
       }
     );
   },
@@ -28,6 +32,7 @@ Page({
     let todoTableObject = new wx.BaaS.TableObject("todo");
     todoTableObject.delete(this.data.currentTodo._id).then(
       res => {
+        App.globalData.needRefresh = true;
         console.log("delete success");
         console.log(res);
         wx.hideLoading();
@@ -63,5 +68,6 @@ Page({
     wx.showLoading({
       title: "加载中"
     });
+    this.deleteTodo();
   }
 });
