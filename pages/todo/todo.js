@@ -40,12 +40,10 @@ Page({
           console.log(res);
           let todos = res.data.objects;
           let currentTodos = this.data.todos;
-          if (todos && todos.length > 0) {
-            if (loadmore) {
-              this.setTodos([...currentTodos, ...todos]);
-            } else {
-              this.setTodos(todos);
-            }
+          if (loadmore) {
+            this.setTodos([...currentTodos, ...todos]);
+          } else {
+            this.setTodos(todos);
           }
           this.loadDone();
         },
