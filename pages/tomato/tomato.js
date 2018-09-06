@@ -47,8 +47,8 @@ Page({
 
     //Draw text
     context.beginPath();
-    context.setFillStyle(this.data.isStartTomato ? "#e74c3c" : "#2ecc71");
-    context.setFontSize(20);
+    context.setFillStyle(this.data.isStartRest ? "#2ecc71" :  "#e74c3c");
+    context.setFontSize(40); 
     context.setTextAlign("center");
     context.setTextBaseline("middle");
     context.fillText(this.flag.minutes + ":" + this.flag.seconds, 187.5, 187.5);

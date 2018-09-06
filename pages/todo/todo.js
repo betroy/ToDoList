@@ -51,6 +51,11 @@ Page({
           console.log("query todo err");
           console.log(err);
           this.loadDone();
+          wx.showToast({
+            title: "数据加载失败",
+            icon: "none",
+            duration: 1000
+          });
         }
       );
   },
