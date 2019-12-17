@@ -1,3 +1,4 @@
+const App = getApp();
 Page({
   data: {
     content: null,
@@ -20,18 +21,18 @@ Page({
   bindtapSubmit(event) {
     let content = this.data.content;
     let email = this.data.email;
-    //实例化TableObject对象
-    let feedbackTableObject = new wx.BaaS.TableObject("feedback");
     //创建一条空记录
-    let feedbackRecord = feedbackTableObject.create();
+    let feedbackRecord = new Object;
     if (content && content.length > 0) {
-      feedbackRecord.set("content", content);
+      feedbackRecord.content = content;
     }
     if (email && email.length > 0) {
-      feedbackRecord.set("email", email);
+      feedbackRecord.email = email;
     }
-    feedbackRecord.save().then(
-      res => {
+
+    console.log(feedbackRecord);
+    App.dbFeedback.add({ data: feedbackRecord })
+      .then(res => {
         console.log("add feedback success");
         console.log(res);
         wx.hideLoading();
@@ -39,18 +40,15 @@ Page({
           title: "反馈成功",
           icon: "success",
           duration: 1000,
-          complete: function() {
+          complete: function () {
             wx.navigateBack();
           }
         });
-      },
-      err => {
+      }, err => {
         console.log("add feedback err");
         console.log(err);
         wx.hideLoading();
-      }
-    );
-
+      });
     wx.showLoading({
       title: "提交中"
     });

@@ -2,12 +2,14 @@
 App({
   systemInfo: null,
   dbTodos: null,
+  dbFeedback: null,
   onLaunch(options) {
     const self = this;
 
     //初始化云函数
     wx.cloud.init({
-      env: 'todolist-test-80be87',
+      env: 'todolist-eea649',
+      // env: 'todolist-test-80be87',
       traceUser: 'true'
     });
 
@@ -18,11 +20,13 @@ App({
     });
     //初始化DB
     let db = wx.cloud.database({
-      env: 'todolist-test-80be87'
+      env: 'todolist-eea649'
+      // env: 'todolist-test-80be87'
     });
     //获取todos
     self.dbTodos = db.collection('todos');
-
+    //获取feedback
+    self.dbFeedback = db.collection('feedback');
   },
   onShow(options) {
     console.log("onShow");
