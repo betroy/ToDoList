@@ -19,8 +19,8 @@
   "tabBar": {
     "color": "#cccccc",
     "selectedColor": "#e74c3c",
-    "borderStyle":"black",
-    "position":"bottom",
+    "borderStyle": "black",
+    "position": "bottom",
     "list": [
       {
         "pagePath": "pages/todo/todo",
@@ -53,10 +53,5 @@
     "downloadFile": 1000
   },
   "debug": true,
-  "plugins": {
-    "sdkPlugin": {
-      "version": "1.7.0",
-      "provider": "wxc6b86e382a1e3294"
-    }
-  }
+  "sitemapLocation": "sitemap.json"
 }

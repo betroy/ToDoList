@@ -24,29 +24,20 @@ Page({
         offset: 0
       });
     }
-    //实例化TableObject对象
-    let todoTableObject = new wx.BaaS.TableObject("todo");
-    //实例化Query对象
-    let query = new wx.BaaS.Query();
-    query.compare("created_by", "=", App.globalData.id);
-    todoTableObject
-      .setQuery(query)
-      .limit(15)
-      .offset(this.data.offset)
-      .find()
-      .then(
-        res => {
-          console.log("query todo success");
-          console.log(res);
-          let todos = res.data.objects;
-          let currentTodos = this.data.todos;
-          if (loadmore) {
-            this.setTodos([...currentTodos, ...todos]);
-          } else {
-            this.setTodos(todos);
-          }
-          this.loadDone();
-        },
+    //每次获取15条数据
+    App.dbTodos.limit(15).skip(this.data.offset).get().
+      then(res => {
+        console.log("query todo success");
+        console.log(res);
+        let todos = res.data;
+        let currentTodos = this.data.todos;
+        if (loadmore) {
+          this.setTodos([...currentTodos, ...todos]);
+        } else {
+          this.setTodos(todos);
+        }
+        this.loadDone();
+      },
         err => {
           console.log("query todo err");
           console.log(err);
@@ -56,28 +47,28 @@ Page({
             icon: "none",
             duration: 1000
           });
-        }
-      );
+        });
   },
 
   addTodo(title) {
-    //实例化TableObject对象
-    let todoTableObject = new wx.BaaS.TableObject("todo");
-    //创建一条空记录
-    let todoRecord = todoTableObject.create();
-    todoRecord.set("todo_title", title);
-    todoRecord.set("checked", false);
-    todoRecord.save().then(
-      res => {
+    let newTodo = {
+      "todo_title": title,
+      "checked": false
+    }
+    App.dbTodos.add({
+      data: newTodo
+    })
+      .then(res => {
         console.log("add todo success");
         console.log(res);
-        this.setTodos([...this.data.todos, res.data]);
+        newTodo._id = res._id;
+        this.setTodos([...this.data.todos, newTodo]);
+        console.log(this.data.todos);
       },
-      err => {
-        console.log("add todo err");
-        console.log(err);
-      }
-    );
+        err => {
+          console.log("add todo err");
+          console.log(err);
+        });
   },
 
   // 根据ID查找todo
@@ -96,7 +87,7 @@ Page({
     return findedTodo;
   },
 
-  deleteTodo() {},
+  deleteTodo() { },
 
   updateTodo(checkedTodoId) {
     let todos = this.data.todos;
@@ -109,18 +100,17 @@ Page({
     console.log(todos);
 
     //对比，找出已修改状态的todo
-    //实例化TableObject对象
-    let todoTableObject = new wx.BaaS.TableObject("todo");
-    let todoRecord = todoTableObject.getWithoutData(checkedTodo._id);
-    todoRecord.set("checked", checkedTodo.checked);
-    todoRecord.update().then(
-      res => {
-        console.log("update todo success");
-      },
-      err => {
-        console.log("update todo err");
+    App.dbTodos.doc(checkedTodoId).update({
+      data: {
+        checked: checkedTodo.checked
       }
-    );
+    }).then(res => {
+      console.log(res);
+      console.log("update todo success");
+    }, err => {
+      console.log(err);
+      console.log("update todo err:");
+    });
   },
 
   onLoad() {
@@ -141,7 +131,7 @@ Page({
       needRefresh: true
     });
   },
-  onUnload() {},
+  onUnload() { },
   onPullDownRefresh() {
     console.log("onPullDownRefresh");
     this.setData({
@@ -149,10 +139,10 @@ Page({
     });
     this.queryTodos(false);
   },
-  onReachBottom() {},
-  onShareAppMessage() {},
-  onPageScroll() {},
-  onTabItemTap(item) {},
+  onReachBottom() { },
+  onShareAppMessage() { },
+  onPageScroll() { },
+  onTabItemTap(item) { },
   bindconfirm(event) {
     let title = event.detail.value;
     console.log(event.detail.value);
@@ -179,7 +169,9 @@ Page({
     let checkedTodoId = event.currentTarget.id;
     let todo = this.findTodo(checkedTodoId);
     let todoJson = JSON.stringify(todo);
-    wx.navigateTo({ url: `../tododetail/tododetail?todo=${todoJson}` });
+    wx.navigateTo({
+      url: `../tododetail/tododetail?todo=${todoJson}`
+    });
   },
   checkboxChange(event) {
     // console.log(event);

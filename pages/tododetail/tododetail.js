@@ -11,39 +11,31 @@ Page({
     });
     console.log(this.data.currentTodo);
   },
-  updateTodo(key, value) {
-    let todoTableObject = new wx.BaaS.TableObject("todo");
-    let todoRecord = todoTableObject.getWithoutData(this.data.currentTodo._id);
-    todoRecord.set(key, value);
-    todoRecord.update().then(
-      res => {
-        App.globalData.needRefresh = true;
-        console.log("update todo success");
-        console.log(res);
-      },
-      err => {
-        console.log("update todo err");
-        console.log(err);
-      }
-    );
+  updateTodo(newData) {
+    App.dbTodos.doc(this.data.currentTodo._id).update({
+      data: newData
+    }).then(res => {
+      App.globalData.needRefresh = true;
+      console.log("update todo success");
+      console.log(res);
+    }, err => {
+      console.log("update todo err");
+      console.log(err);
+    });
   },
   deleteTodo() {
-    //实例化TableObject对象
-    let todoTableObject = new wx.BaaS.TableObject("todo");
-    todoTableObject.delete(this.data.currentTodo._id).then(
-      res => {
+    App.dbTodos.doc(this.data.currentTodo._id).remove()
+      .then(res => {
         App.globalData.needRefresh = true;
         console.log("delete success");
         console.log(res);
         wx.hideLoading();
         wx.navigateBack();
-      },
-      err => {
+      }, err => {
         console.log("delete err");
         console.log(err);
         wx.hideLoading();
-      }
-    );
+      });
   },
   catchtapRadio(event) {
     console.log(event);
@@ -52,17 +44,17 @@ Page({
     this.setData({
       currentTodo: todo
     });
-    this.updateTodo("checked", todo.checked);
+    this.updateTodo({ "checked": todo.checked });
   },
   bindconfirmInput(event) {
     let title = event.detail.value;
     console.log(event.detail.value);
-    this.updateTodo("todo_title", title);
+    this.updateTodo({ "todo_title": title });
   },
   bindconfirmTextarea(event) {
     let text = event.detail.value;
     console.log(event.detail.value);
-    this.updateTodo("remark", text);
+    this.updateTodo({ "remark": text });
   },
   bindtapDelete(event) {
     wx.showLoading({
